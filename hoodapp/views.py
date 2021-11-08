@@ -13,3 +13,18 @@ from .models import Neighbourhood, Profile, Business, Post
 def index(request):
     return render(request, 'index.html')
 
+
+def edit_profile(request, username):
+    user = User.objects.get(username=username)
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user.username)
+    else:
+        form = UpdateProfileForm()
+    return render(request, 'create_profile.html', {'form': form})
+
+
+def profile(request, username):
+    return render(request, 'profile.html')
