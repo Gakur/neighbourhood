@@ -28,3 +28,25 @@ def edit_profile(request, username):
 
 def profile(request, username):
     return render(request, 'profile.html')
+
+
+def neighbourhoods(request):
+    all_hoods = Neighbourhood.objects.all()
+    all_hoods = all_hoods[::-1]
+    params = {
+        'all_hoods': all_hoods,
+    }
+    return render(request, 'neighbourhoods.html', params)
+
+
+def create_neighbourhood(request):
+    if request.method == 'POST':
+        form = NeighbourHoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.admin = request.user.profile
+            hood.save()
+            return redirect('hood')
+    else:
+        form = NeighbourHoodForm()
+    return render(request, 'newhood.html', {'form': form})
