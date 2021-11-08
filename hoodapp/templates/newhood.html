@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container bg-white newhood">
+    <div class="row" style="background-color: #fff;">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3 style="color: purple;" class="text-center">Add a new Neighbourhood</h3>
+            <form action="" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button style="color: purple;" class="btn btn btn-outline-danger     btn-default">Add</button>
+            </form><br>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+</div>
+<style>
+    body{
+      background-color: linen;
+      
+    }
+  </style>
+
+{% endblock %}
