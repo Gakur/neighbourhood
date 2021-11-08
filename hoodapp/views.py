@@ -7,7 +7,7 @@ from .models import Neighbourhood, Business, Post
 
 
 # Create your views here.
-@login_required(login_url='login')
+@login_required(login_url='/accounts/login/')
 def index(request):
     return render(request, 'index.html')
 
