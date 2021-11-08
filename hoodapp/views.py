@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
-from .forms import BusinessForm,UpdateProfileForm, NeighbourHoodForm, PostForm
+from .forms import BusinessForm, ProfileForm, HoodForm, PostForm
 from django.contrib.auth.decorators import login_required
 from .models import Neighbourhood, Profile, Business, Post 
 
@@ -17,12 +16,12 @@ def index(request):
 def edit_profile(request, username):
     user = User.objects.get(username=username)
     if request.method == 'POST':
-        form = UpdateProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('profile', user.username)
     else:
-        form = UpdateProfileForm()
+        form = ProfileForm()
     return render(request, 'create_profile.html', {'form': form})
 
 
@@ -41,14 +40,14 @@ def neighbourhoods(request):
 
 def create_neighbourhood(request):
     if request.method == 'POST':
-        form = NeighbourHoodForm(request.POST, request.FILES)
+        form = HoodForm(request.POST, request.FILES)
         if form.is_valid():
             hood = form.save(commit=False)
             hood.admin = request.user.profile
             hood.save()
             return redirect('hood')
     else:
-        form = NeighbourHoodForm()
+        form = HoodForm()
     return render(request, 'newhood.html', {'form': form})
 
 
